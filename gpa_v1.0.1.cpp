@@ -11,7 +11,7 @@ void index();       int gpa();           int calculator();
 int developer();    void loading();      int login();
 int again();        int main();          int cgpa();
 int reg();          int record();        int tool();
-int xrecord();      void check();        void gpain();
+int xrecord();      void check();        int gpain();
 void ntog();        void comment();      void pnt();
 void crd();         void pass();         void loginin();
 void registerin();  void enc();          void drc();
@@ -41,7 +41,8 @@ struct data
     int file;
   }dd;
 
-  int R=0; int fix;
+            int R=0; int fix;
+            char b=219, a=220;
 
 /////////////////////////////////////// ***MAIN FUNCTION*** //////////////////////////////////////////
 main()
@@ -112,27 +113,34 @@ int gpa()
 {
     system("cls");
     system("color 3"); fix=0;
-    cout<<"\n\t\t\t-------------- GPA Calculating -----------------"<<endl;
-    std::cout << "\t\t\t\tAccording to chinese gpa system " << '\n';
-    cout<<"\n\n\t\t1. Calculate G.P.A    *[option to save record]*"<<endl;
-    cout<<"\n\t\t2. Calculate C.G.P.A\n";
-    cout<<"\n\t\t0. Go Back to Main Menu"<<endl;
-    cout<<"\t\t_________________________\n";cout<<"\t\t:> ";char ch=getch();
+    std::cout<<"\n\t\t\t-------------- GPA Calculating -----------------"<<endl;
+    std::cout << "\t\t\t\tAccording to Chinese GPA system " << '\n';
+    std::cout<< "\n\n\t\t1. Calculate G.P.A    *[option to save record]*\n"
+             << "\t\t___________________________________________";
+    std::cout<< "\n\t\t2. Calculate C.G.P.A\n"
+             << "\t\t___________________________________________";
+    std::cout<< "\n\t\t9. Return main menu \n"
+             << "\t\t___________________________________________\n";
+    std::cout<<"\t\t:> ";     char ch=getch();
 
     switch (ch) {
       case '1':
                 while(1){
             come: system("cls");
-            std::cout << "\n\n\n\n\n\t\t 1.Just calculate don't save record" << '\n';
-            std::cout << "\n\t\t 2.Calculate and [save record]" << '\n'<<"\t\t___________________________________________"
-            <<"\n\t\t :> ";  char ch1=getch();
+            std::cout << "\n\n\n\n\n\t\t 1. Just calculate don't save record" <<'\n'
+                      << "\t\t___________________________________________";
+            std::cout << "\n\t\t 2. Calculate and [save record]" << '\n'
+                      << "\t\t___________________________________________";
+            std::cout << "\n\t\t 0. BACK" << '\n'
+                      << "\t\t___________________________________________"
+                      << "\n\t\t :> ";  char ch1=getch();
 
-            switch (ch1) {
-              case '1':
+        switch (ch1) {
+          case '1':
                 d.save=0;
                  gpain();
                 break;
-              case '2':
+          case '2':
                   if (R==1)
                   {
                     d.save=1;
@@ -142,10 +150,12 @@ int gpa()
                     system("cls"); std::cerr << "\n\n\t\t To save data Log in first" << '\n'; Sleep(1000);
                     return login();
                   }
-
                 break;
 
-                default:
+          case '0':
+                  return gpa();
+
+          default:
                 system("color 4");
                 std::cout << "\t\t Wrong choice " << '\n';  goto come; Sleep(500);
               }
@@ -155,8 +165,8 @@ int gpa()
             cgpa();
             break;
 
-     case '0':
-            return again();
+     case '9':
+            return main();
 
      default:
             system("color 4");
@@ -166,15 +176,39 @@ int gpa()
    return gpa();
 }
 ///////////////////////////////////////////////////////
-void gpain()
+int gpain()
 {
     d;
     system("cls"); d.fline=0;
-          if (d.save==1) { std::cout << "\n\n\t\t\t Enter your semester name should be like\n\t\t\t\t[winter2019] [spring2019]\n\t\t"
+          if (d.save==1) {
+                std::cout << "\n\n\t\t\t Enter your semester name should be like\n\t\t\t\t[winter2019] [spring2019]\n\t\t"
           <<"And you should remember this name for checking record"<<"\n\t\t_________________________________________________________________" << '\n';
           }
         if(d.ccount>=1){ string fake; getline(cin, fake); }
+
         std::cout << "\n\n\t\t Enter semester name :> "; getline(cin, d.smstr);
+        if (d.save==1) {
+                ifstream onecheck("record.dat", ios::in);
+                if(!onecheck.is_open())
+                {
+                    SetConsoleTextAttribute( GetStdHandle(STD_OUTPUT_HANDLE), 4);
+                    cerr<<"\n\t\t fail to open record file\n";
+                    return gpa();
+                }
+                string semesterchk;
+                while(!onecheck.eof())
+                {
+                    onecheck>>semesterchk;
+                    if(semesterchk==d.smstr)
+                    {
+                        SetConsoleTextAttribute( GetStdHandle(STD_OUTPUT_HANDLE), 4);
+                        cerr<<"\n\t\t *This semester name already exist\n\n";
+                        SetConsoleTextAttribute( GetStdHandle(STD_OUTPUT_HANDLE), 3);
+                        system("pause");
+                        return gpain();
+                    }
+                }
+        }
         cout<<"\n\t\t How many subject's you have :> "; cin>>d.q; system("cls");
 
            d.sum=0, d.tot=0, d.totCr=0, d.gpa=0, d.topo=0, d.tmark=0, d.fgpa=0;
@@ -200,11 +234,17 @@ void gpain()
     sub:
     system("cls");
     if (d.save==1) {
-    cout<<"\n\n\n\t\t\t1. Calculate Again & (save)"<<endl; }
+    cout<<"\n\n\n\t\t\t1. Calculate Again & (save)"<<endl
+        <<"\t\t\t____________________________"<<endl; }
     else{
-      cout<<"\n\n\n\t\t\t1. Calculate Again"<<endl;
+      cout<<"\n\n\n\t\t\t1. Calculate Again"<<endl
+          <<"\t\t\t____________________________"<<endl;
     }
-    cout<<"\t\t\t0. Go Back to Main Menu"<<endl;
+    fix=1;
+    cout<<"\t\t\t0. Go Back to GPA page"<<endl
+        <<"\t\t\t____________________________"<<endl;
+    cout<<"\t\t\t9. Return main menu"<<endl
+        <<"\t\t\t____________________________"<<endl;
     cout<<"\t\t\t===:> ";
     char inmenu=getch();
 
@@ -215,15 +255,17 @@ void gpain()
              break;
 
         case '0':
-             fix++;
-             again();
+             return gpa();
+
+        case '9':
+             return main();
 
         default:
               cout<<"\n\nYou have Entered Wrong Input!Please Choose Again!"<<endl;
               goto sub;
 
     }
-
+    return gpa();
 
 }
 
@@ -231,12 +273,15 @@ void gpain()
 
     void pnt()//point
     {
-        d; inp: if(d.save==1) { if(d.x==1){cout<<"\n\t\t\t Subject name's length should be >2-10<\n"; d.x++; }
+        d; inp: if(d.save==1) { if(d.x==1){cout<<"\n\t\t\t      Subject name's length should be >2-10<\n"; d.x++; }
                                                                                                               string fake;getline(cin,fake);
             std::cout << "\n\t\t\t\t enter name of subject "<<d.i+1<<" : ";
             getline(cin, d.encsubname);
             std::cout << "\t\t\t\t         ______________" << '\n';
             std::cout << "\t\t\t\t\t  ---"<<d.encsubname<<"---";  }
+            if(d.save!=1){
+                cout<<"\n\t\t\t **Don't need subject name hare\n";
+            }
             std::cout << "\n\t\t  ______________________________________________" << '\n';
                std::cout << "\t\t | Enter mark of subject     "<<d.i+1<<"  |   "; std::cin >> d.mark;
                std::cout << "\t\t |______________________________|_______________|"<<"\n";
@@ -307,7 +352,7 @@ void comment()
   }
   else {
     system("color 4");
-      std::cerr << "\t\t Invalid point kkkkkkkkkkkkkkkk " << '\n';
+      std::cerr << "\t\t Invalid point " << '\n';
   }
 }
 //////////////////////////////////////////////////////
@@ -374,7 +419,7 @@ void index()
     cout<<"\t\t"<<b<<"      6. Tools                      "<<b<<"\n";
     cout<<"\t\t"<<b<<"                                    "<<b<<"\n";
     cout<<"\t\t"<<b<<"      0. exit                       "<<b<<"\n";
-    cout<<"\t\t"<<b<<"                                    "<<b; cout<<"\t\t Copyright(c)github.com/ARROOT"<<endl;
+    cout<<"\t\t"<<b<<"                                    "<<b; cout<<"\t\t (c)github.com/ARROOT  v1.0.1"<<endl;
     cout<<"\t\t"<<b<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<
     a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<b<<"\n";
     cout<<"\n\t\t    Press 1|2|3|4|0 :> ";
@@ -467,9 +512,7 @@ int login()
                     }
                    std::cout << "\t\t| 9.Return main menu|\n"
                    <<"\t\t|___________________|\n";
-                   cout<<"\t\t| 0.Exit            |\n";
-                   cout<<"\t\t|___________________|\n"
-                   <<"\t\t :> ";
+
                    char ch=getch();
 
                 switch (ch) {
@@ -494,9 +537,6 @@ int login()
 
                       case '9':
                             return main();
-
-                      case '0':
-                            return again();
 
                       default:
                         system("color 4");
@@ -524,13 +564,15 @@ void registerin()
       loading();
 
       system("cls");system("color 2");                                       //getline(cin, fake);
-        std::cout << "\n\n\t\t\tRegistration page" << '\n';
-      cout<<"\n\n" //2 newlines
-      <<"\t\t\tNew Email : ";
+        std::cout << "\n\n\t\t\tRegistration page"
+                  << "\n\t\t---------------------------";
+        std::cout << "\n\n\t\t\t__________________________________________" //2 newlines
+                  <<"\t\t\t  New Email : ";
         getline(cin, da.remail);
 
-      cout<<"\t\t\tNew Username: ";
-        getline(cin, da.rname);
+        std::cout << "\n\n\t\t\t__________________________________________"
+        <<"\t\t\t  New Username: ";
+         getline(cin, da.rname);
 
         strong:
       SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 5);
@@ -563,23 +605,56 @@ void registerin()
 ////////////////////////////////////////////////////
 void loginin()
 {
-      da;
+      da; char pass[100]="", pas, En;
+
       while(da.logfail<3){ system("cls"); system("color 2");
-      std::cout << "\n\n\t\t\t####**** Login page ****##### " << '\n';
+      std::cout << "\n\n\t\t\t\t####**** Login page ****##### "
+                << "\n\t\t\t"<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<"###"
+                             <<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<'\n';
       if(da.logfail==2){SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
                         cerr<<"\t\t\t\t [ Last time ]\n";
-                        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 3);}
+                        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);}
         std::ifstream get("loginfo.dat",ios::in);
          //getline(cin, fake);
 
-      std::cout << "\n\t\t\t   username : ";
-      getline(cin, da.lname);
-      std::cout << "\t\t\t   password : ";
-      getline(cin, da.lpassword);
+        std::cout << "\n\n\t\t\t__________________________________________"
+                  << "\n\t\t\t   Username : ";
+        getline(cin, da.lname);
 
-       get>>da.sname>>da.tpassword>>da.semail;
-       drc();
+        int i=0;
+        std::cout << "\t\t\t__________________________________________"
+                  << "\n\t\t\t   Password : ";
+        std::cout << "\t\t\t__________________________________________";
+        while (1)
+            {
+                taking:
+                pas=getch();
+                En=pas;  pass[i]=pas; //cout<<pass[i];
+                if(En=='\r')
+                  {
+                    pass[i]='\0';
+                    break;
+                  }
+                 if (En=='\b' && i>=1) {
+                     std::cout << "\b \b";
+                     i--; goto taking;
+                }
+                if (En!=13 && En!=8) {
+                  std::cout << "*";
+                  i++;
+                  //da.lpassword+=pass;
+                }
+            }
 
+            for (int j = 0; j < strlen(pass); j++) {
+              pas=pass[j];
+              da.lpassword+=pas;
+            }
+
+            //cout<<"\n\n\n";  cout<<da.lpassword<<'\n'<<pass<<'\n'; system("pause");
+
+        get>>da.sname>>da.tpassword>>da.semail; std::cout<<"\n";
+        drc();
     if (da.sname==da.lname && da.spassword==da.lpassword) {
         system("cls"); system("color 2");
         std::cout << "\n\n\n\t\t\tLogin Successfully"; R=1;
@@ -588,7 +663,7 @@ void loginin()
     if (da.sname!=da.lname || da.spassword!=da.lpassword){
       system("color 4"); da.logfail++;
       std::cerr << "\n\n \t\t\tSomething wrong USERNAME or PASSWORD\n\n\n" <<"\n\t\t\t"<<da.logfail<<" time failed to login attempts out of 3."<<"\n\n";
-      system("pause");
+      system("pause"); da.lpassword.clear();
     }
     if(da.logfail==3)
     {
@@ -613,7 +688,7 @@ void drc()
 {
     da; da.spassword="";
     for(int i = 0; (i < 100 && da.tpassword[i] != '\0'); i++){
-       da.tpassword[i] -= + 5; cout<<"\t."; Sleep(50); //the key for encryption is 3 that is added to ASCII value
+       da.tpassword[i] -= + 5; cout<<"  ."; Sleep(50); //the key for encryption is 3 that is added to ASCII value
     }
     da.spassword+=da.tpassword;
 }
@@ -672,8 +747,7 @@ int cgpa()
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int developer()
-{
-    char b=219, a=220;
+ {
     system("cls");
   system("color 3");
   lop:
@@ -693,7 +767,8 @@ int developer()
   cout<<"\t\t\t"<<b<<"         2. Facebook : AHAMED SAJIB               "<<b<<"\n";
   cout<<"\t\t\t"<<b<<"         3. twitter  : Sazib arko                 "<<b<<"\n";
   cout<<"\t\t\t"<<b<<"         4. Github   : ARROOT                     "<<b<<"\n";
-  cout<<"\t\t\t"<<b<<"         0. Exit                                  "<<b<<"\n";
+  cout<<"\t\t\t"<<b<<"                                                  "<<b<<"\n";
+  cout<<"\t\t\t"<<b<<"         9. Return_Main_Menu                      "<<b<<"\n";
   cout<<"\t\t\t"<<b<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<
   a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<b<<"\n";
   cout<<"\n\n\t\t\t     Press 1|2|3|4|5|0 >> ";
@@ -725,8 +800,8 @@ int developer()
         loading();
         goto lop;
 
-     case '0':
-        return again();
+     case '9':
+        return main();
 
     default:
       system("color 4");
@@ -753,14 +828,16 @@ int xrecord()
      check>>datacheck;
      system("cls"); system("color 2");
      if (datacheck>"0") { //cout<<fix;
-     std::cout << "\n\n\t\t\t 1. Show courses (recoed)" << '\n';
-     std::cout << "\n\t\t\t 2. Add cources (record)" << '\n';
+     std::cout << "\n\n\t\t\t 1. Show courses (record)" << '\n';
+     std::cout << "\n\t\t\t 2. Add courses (record)" << '\n';
       }
      if (datacheck<="0") {
-       std::cout << "\n\t\t\t 1. Add cources ( save record) [ No record found yet]" << '\n';
-       std::cout << "\n\t\t\t 2. Return main menu" << '\n';
+       std::cout << "\n\t\t\t 1. Add courses ( save record)";
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 5);
+       std::cout << "  [ No record found yet]" << '\n';
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
      }
-       std::cout << "\n\t\t\t 0. exit/return menu" << '\n';
+       std::cout << "\n\t\t\t 0. Return main menu" << '\n';
        std::cout << "\n\t\t\t :> ";
        char ch=getch();
 
@@ -781,10 +858,10 @@ int xrecord()
               return gpa();
             }
             else{
-              return main();
+              return xrecord();
             }
       case '0':
-            return again();
+            return main();
     }getch();
 
    return xrecord();
@@ -1066,7 +1143,7 @@ int tool()
         system("cls");
     std::cout << "\n\n\n\t\t 1. Stop watch (lap)"
               << "\n\t\t 2. Feedback & Suggestion"
-              << "\n\t\t 3. update"
+              << "\n\t\t 3. update  v1.0.1"
               << "\n\t\t 0. Return maim manu"
               << "\n\t   _________________________________";
 
