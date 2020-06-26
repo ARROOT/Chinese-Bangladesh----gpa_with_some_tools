@@ -1,4 +1,4 @@
-#include<iostream>
+#include <iostream>
 #include <stdlib.h>
 #include <conio.h>
 #include <windows.h>
@@ -20,7 +20,7 @@ void show();     void comment();   void ntog();       void registerin();
 
 using namespace std;
                       int R=0, fix, scode=0;
-                      char b=219, a=220; char encrypt[200];
+                      char b=219, a=220; //char encrypt[200];
   struct data
   {
     float point=0, credit=0, mark=0, tmark=0, fgpa=0, sum=0, tot=0, totCr=0, gpa=0, topo=0;
@@ -30,7 +30,7 @@ using namespace std;
 
   struct info
   {
-    string lname,  lpassword,  rname,  remail,  rpassword,  sname,  spassword, semail, y;
+    string lname,  lpassword,  rname,  remail,  rpassword,  sname,  spassword, semail, y, display;
     int su=0, sp=0, logfail=0;
   }da;
 
@@ -77,14 +77,15 @@ void loading() //LOADING_FUNCTION///////////////////////////
             system("cls");
 }
 
-int mai( char pass[200] )  ///////////Encryption////////////
+void enc( char pass[200] )  ///////////Encryption///////////
 {
-              int y,z,e=0;
+              int y,z,e=0, scode;
+              char _hash[200]={0};
               scode=strlen(pass);
               if(scode<31)
               {
                 z=((scode)*3);
-                pass[z]='\0';
+                _hash[z]='\0';
                 for(int i=0; i<scode+1; i++)
                     {
                         for(int j=(i*3); j<=(i*3+2); j++)
@@ -93,38 +94,40 @@ int mai( char pass[200] )  ///////////Encryption////////////
                             {
                                 if(e==0)
                                 {
-                                    encrypt[j]=pass[i]+scode; e++; scode--;
+                                    _hash[j]=pass[i]+scode; e++; scode--;
                                 }
                                 else if(e==1)
                                 {
-                                    encrypt[j]=pass[i]+(5+scode); e++;
+                                    _hash[j]=pass[i]+(scode+3); e++;
                                 }
                                 else
                                 {
-                                    encrypt[j]=pass[i]+(scode-3); e=0;
+                                    _hash[j]=pass[i]+(scode+4); e=0;
                                 }
                             }
                             if((int)pass[i]>96)
                             {
                                 if(e==0)
                                 {
-                                    encrypt[j]=pass[i]-scode; e++; scode++;
+                                    _hash[j]=pass[i]-scode; e++; scode++;
                                 }
                                 else if(e==1)
                                 {
-                                    encrypt[j]=pass[i]-(5+scode); e++;
+                                    _hash[j]=pass[i]-(3+scode); e++;
                                 }
                                 else
                                 {
-                                    encrypt[j]=pass[i]-(9+scode); e=0;
+                                    _hash[j]=pass[i]-(4+scode); e=0;
                                 }
                               }
                             }
                           }
-                    encrypt[z]='\0';
-                    y=strlen(encrypt);
-                    pass=encrypt;
-                  }
+                        }
+                for(int i=0; i<strlen(_hash); i++)
+                {
+                    pass[i] = _hash[i];
+                }
+                pass[z]='\0';
 }
 
 int cgpa()//////////////////////cgpa////////////////////////
@@ -176,7 +179,7 @@ int cgpa()//////////////////////cgpa////////////////////////
 int gpa()///////////////////////gpa/////////////////////////
 {
     system("cls");
-    co(lo(rr), 11);   fix=0;
+    co(lo(rr), 14);   fix=0;
     std::cout<<"\n\t\t\t-------------- GPA Calculating -----------------"<<endl;
     std::cout << "\t\t\t\tAccording to Chinese GPA system " ; ul;
     std::cout<< "\n\n\t\t1. Calculate G.P.A   *[option to save record]*\n"
@@ -532,7 +535,7 @@ void index()/////////////////////index//////////////////////
 {
     system("cls");
     logo;
-    system("color 0a");
+    system("color e");
     char a=220, b=219;
     cout<<"\n\t\t"<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<
     a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<"\n";
@@ -545,11 +548,11 @@ void index()/////////////////////index//////////////////////
     cout<<"\t\t"<<b<<"                                    "<<b<<"\n";
     cout<<"\t\t"<<b<<"      3. G.P.A Calculate            "<<b<<"\n";
     cout<<"\t\t"<<b<<"                                    "<<b<<"\n";
-    cout<<"\t\t"<<b<<"      4. Record(add/show)           "<<b<<"\n";
-    cout<<"\t\t"<<b<<"                                    "<<b<<"\n";
-    cout<<"\t\t"<<b<<"      5. About Developer {;}        "<<b<<"\n";
-    cout<<"\t\t"<<b<<"                                    "<<b<<"\n";
-    cout<<"\t\t"<<b<<"      6. Tools                      "<<b<<"\n";
+    cout<<"\t\t"<<b<<"      4. Record(add/show)           "<<b; cout<<"        ____               __              __\n";
+    cout<<"\t\t"<<b<<"                                    "<<b; cout<<"       / __/___   _  __   / /_____  ____  / /\n";
+    cout<<"\t\t"<<b<<"      5. About Developer {;}        "<<b; cout<<"      / /_/ __ \\ | |/_/  / __/ __ \\/ __ \\/ /\n";
+    cout<<"\t\t"<<b<<"                                    "<<b; cout<<"     / __/ /_/ /  > <   / /_/ /_/ / /_/ / /\n";
+    cout<<"\t\t"<<b<<"      6. Tools                      "<<b; cout<<"    /_/  \\____/ /_/|_|  \\__/\\____/\\____/_/\n";
     cout<<"\t\t"<<b<<"                                    "<<b<<"\n";
     cout<<"\t\t"<<b<<"      0. exit                       "<<b<<"\n";
     cout<<"\t\t"<<b<<"                                    "<<b; cout<<"\t\t (c)github.com/ARROOT  v1.0.1"<<endl;
@@ -579,36 +582,51 @@ int login()////////////////login////////////////////////////
            string ck;
            getline(dck,ck);
 
-                   if (ck>="0")
+                   if (ck>="0" && da.logfail<3)
                    {
-                     cout<<"\n\t\t\t\t _____________________\n"
-                         <<"\t\t\t\t | 1.Login           |\n"
-                         <<"\t\t\t\t |___________________|\n";
+                     cout<< "\n\t\t\t\t _____________________\n"
+                         << "\t\t\t\t | 1.Login           |\n"
+                         << "\t\t\t\t |___________________|\n";
                    }
                    if (ck<="0")
                    {
-                      cout<<"\n\t\t\t\t _____________________\n"
-                          <<"\t\t\t\t | 1.Register        |\n"
-                          <<"\t\t\t\t |___________________|\n";
+                      cout<< "\n\t\t\t\t _____________________\n"
+                          << "\t\t\t\t | 1.Register        |\n"
+                          << "\t\t\t\t |___________________|\n";
                     }
                    if (R==1)
                     {
-                      cout<< "\t\t\t\t | 2.Record(show/add)|\n"
-                          <<     "\t\t\t\t |___________________|\n";
+                             co(lo(rr),14);
+                        cout<<"\n\t\t\t\t current user : "<<da.display<<endl;
+                             co(lo(rr),11);
+                        cout<< "\n\t\t\t\t _____________________\n"
+                            << "\t\t\t\t | 2.Record(show/add)|\n"
+                            << "\t\t\t\t |___________________|\n";
                     }
-                   std::cout <<"\t\t\t\t | 9.Return main menu|\n"
-                             <<"\t\t\t\t |___________________|\n";
-                             char ch=getch();
+                   std::cout << "\t\t\t\t | 9.Return main menu|\n"
+                             << "\t\t\t\t |___________________|\n";
 
+
+                    if(da.logfail==3)
+                    {
+                        co(lo(rr),4);
+                        lock;
+                        co(lo(rr),14);
+                        std::cout<<"\n\n\n\t\t   NB : You are failed to log_in 3 time's"
+                                 <<"\n\t\t\tBetter Luck next time.";
+                    }
+
+                   char ch=getch();
                    switch (ch)
                      {
                         case '1':
-                            if (ck>="0")
+                            if (ck>="0" && da.logfail<3)
                                 {
                                   loginin();
                                 }
                             if (ck<="0")
                                {
+                                 loading();
                                  registerin();
                                }
                                 break;
@@ -640,7 +658,8 @@ int login()////////////////login////////////////////////////
 void registerin()///////////registerin//////////////////////
 {
       da;
-      char PASSWORD[200], EMAIL[200], UNAME[200];
+      system("color a");
+      char EMAIL[200], UNAME[200], En; int key=0;
       std::ofstream put("loginfo.dat",ios::app|ios::out|ios::in);
           if (! put.is_open() && ! put.is_open())
             {
@@ -653,28 +672,62 @@ void registerin()///////////registerin//////////////////////
         std::cout << "\n\n\t\t\t__________________________________________"
                   << "\n\t\t\t  New Email    : ";
                     cin.getline(EMAIL, 200);
-                    mai(EMAIL);
-                    da.remail=encrypt;
+                    enc(EMAIL);
+                    da.remail = EMAIL;
 
         std::cout << "\t\t\t__________________________________________"
                   << "\n\t\t\t  New Username : ";
                     cin.getline(UNAME, 200);
-                    mai(UNAME);
-                    da.rname=encrypt;
+                    enc(UNAME);
+                    da.rname = UNAME;
 
+        std::cout << "\t\t\t__________________________________________";
         strong:
-        co(lo(rr), 6);  cout<<"\t\t\t****password length must be (10)****\n";
+        char PASSWORD[200]={0};
+        co(lo(rr), 6);  cout<<"\n\t\t\tPassword length must be (10 <-> 30)\n";
         co(lo(rr), 11);
+        std::cout << "\t\t\t__________________________________________\n";
         cout<<"\t\t\t  New Password : ";
-        cin.getline(PASSWORD, 200);
-        int key = strlen(PASSWORD);
+
+        int i=0;
+        while (1)
+            {
+                taking:
+                PASSWORD[i] = getch();
+                En = PASSWORD[i];
+                if(En=='\r')
+                  {
+                    PASSWORD[i]='\0';
+                    break;
+                  }
+                    if (En=='\b' && i>=1)
+                        {
+                        std::cout << "\b \b";
+                        i--; goto taking;
+                        }
+                        key = strlen(PASSWORD);
+                        if (En!=13 && En!=8)
+                            {
+                            if(key <=10 )
+                                {
+                                    co(lo(rr),12);
+                                }
+                            else{
+                                system("color b");
+                            }
+                            std::cout << PASSWORD[i];
+                            i++;
+                        }
+            }
+
+        key = strlen(PASSWORD);
 
         if (key<10)
         {
             system("cls"); goto strong;
         }
-            mai(PASSWORD);   ////////// Encryption //////////////
-            da.rpassword=encrypt;
+            enc(PASSWORD);   ////////// Encryption //////////////
+            da.rpassword = PASSWORD;
 
       put<<da.rname<<"  "<<da.rpassword<<"  "<<da.remail<<std::endl;  put.close();
 
@@ -696,9 +749,10 @@ void loginin()///////////////log_in/////////////////////////
 
         while(da.logfail<3)
         {
+            loading();
             system("cls");
             co(lo(rr), 11);
-            std::cout << "\n\n\t\t\t\t####**** Login Page ****##### ";
+            std::cout << "\n\n\t\t\t\t####**** Login Page ****####";
                       if(da.logfail==2)
                           {
                             co(lo(rr), 4);
@@ -714,14 +768,15 @@ void loginin()///////////////log_in/////////////////////////
                       << "\n\t\t\t  Email/Username : ";
                       co(lo(rr), 10);
                       cin.getline(lname, 200);
-                      mai(lname);
-                      da.lname=encrypt;
-            int i=0;
+                      da.display = lname;
+                      enc(lname);
+                      da.lname=lname;
+
             co(lo(rr), 11);
             std::cout << "\n\t\t\t___________________________________________"
                       << "\n\t\t\t  User_password  : ";
                       co(lo(rr), 10);
-
+            int i=0;
             while (1)
             {
                 taking:
@@ -744,10 +799,10 @@ void loginin()///////////////log_in/////////////////////////
                 }
             }
 
-            mai(lpass);
-            da.lpassword=encrypt;
+            enc(lpass);
+            da.lpassword=lpass;
             get>>da.sname>>da.spassword>>da.semail;
-            std::cout<<"\n";
+            std::cout<<endl;
             co(lo(rr), 11);
 
     if (da.sname==da.lname && da.spassword==da.lpassword || da.semail==da.lname && da.spassword == da.lpassword)
@@ -755,9 +810,9 @@ void loginin()///////////////log_in/////////////////////////
             system("cls");
             system("color 0a");
             ulock;       R=1;
-            std::cout << "\n\n\n\t\t\tLogin Successfully"<< "\n\t\t\tNow you can check and save record Dear, ";
-            co(lo(rr),9); std::cout <<lname;
-            da.logfail=4; std::cout<<"\n\n\n";
+            std::cout << "\n\n\n\t\t\tLogin Successfully"<< "\n\t\t\tNow you can check and save record.";
+            co(lo(rr),14); std::cout <<"user : "<<da.display;
+            da.logfail=4; std::cout <<"\n\n\n";
         }
     else
        {
@@ -765,15 +820,17 @@ void loginin()///////////////log_in/////////////////////////
             co(lo(rr), 4);
             da.logfail++;
             lock;
-            std::cerr << "\n\n\t\t\tSomething wrong USERNAME or PASSWORD\n"
-                      << "\n\t\tNB :\t"<<da.logfail<<" time failed to login attempts out of 3."<<"\n\n";
+            std::cerr << "\n\n\t\t\tSomething wrong USERNAME or PASSWORD\n";
+            co(lo(rr),14);
+            std::cerr << "\n\t\tNB :\t"<<da.logfail<<" time failed to login attempts out of 3."<<"\n\n";
                         co(lo(rr),2);
                         system("pause");
         }
-    if(da.logfail==3)
+    if  (da.logfail==3)
         {
             system("cls");
             co(lo(rr), 6);
+            std::cout<<"\n\n\t {!}";
             std::cout<<"\n\n\n\t\t\t You are failed to log_in 3 time's"
                      <<"\n\t\t\t Better Luck next time.";
         }
@@ -1023,7 +1080,9 @@ void show()/////////////////show////////////////////////////
 
 int calculator()////////////calculate///////////////////////
 {
-  std::cout<<"\n\t\t_____________________\n"
+  system("cls");
+  co(lo(rr),14);
+   std::cout<<"\n\t\t_____________________\n"
             <<"\t\t| 1. Calculate      |\n"
             <<"\t\t|___________________|\n"
             <<"\t\t| 9.Return main menu|\n"
@@ -1038,61 +1097,64 @@ int calculator()////////////calculate///////////////////////
     case '1':
       while(1)
         {
-          int item,i,mod1,mod2,mod;char o;
-          double add=0,sub,mul=1,div,temp,temp1;
+          long int item,i,mod1,mod2,mod;
+          long double add=0,sub,mul=1,div,temp,temp1;
           system("cls");
           system("color 3");
 
-    cout<<"                           !!!!!!SIMPLE MATHEMATICS CALCULATOR!!!!!!\n\n\n";
-    cout<<"Operations:\n";
-    cout<<"\t\t--------------------\n";
-    cout<<"\t\t( + )( - )( x )( / )\n";
-    cout<<"\t\t--------------------\n";
-    cout<<"\t\t       Mod(m)       \n";
-    cout<<"\t\t--------------------\n";
-    cout<<"\t\t  Square root (s)   \n";
-    cout<<"\t\t--------------------\n";
-    cout<<"\t\t   0.return index   \n";
-    cout<<"\t\t--------------------\n";
-    cout<<"\nEnter the sign which operation you want to do: ";
-     getchar();
-     cin>>o;
-     cout<<endl;
+    cout<<"                           !!!!!!SIMPLE MATHEMATICS CALCULATOR!!!!!!\n\n\n"
+        <<"\t\tOperations:\n"
+        <<"\t\t ____________________\n"
+        <<"\t\t|( + )( - )( x )( / )|\n"
+        <<"\t\t|____________________|\n"
+        <<"\t\t|       Mod(m)       |\n"
+        <<"\t\t|____________________|\n"
+        <<"\t\t|  Square root (s)   |\n"
+        <<"\t\t|____________________|\n"
+        <<"\t\t|   0.return index   |\n"
+        <<"\t\t|____________________|\n"
+        <<"\n\tEnter the sign and HIT Enter : ";
+            char o;
+            cin>>o;
     switch(o)
         {
           case '+':
-          cout<<"How many item you want to add: "; cin>>item; cout<<endl;
+          cout<<"\n\tHow many item you want to add: "; cin>>item; cout<<endl;
 
           for(i=1;i<=item;i++)
             {
               cout<<"\t\t Enter " <<i<<" value :";
               cin>>temp;  cout<<endl;  add+=temp;
             }
-        cout<<"\nSummation = "<<add<<"\n\n";
-        system ("pause");  return calculator();
+        co(lo(rr),14);
+        std::cout<<"\n\t  Result : "<<add<<endl<<endl;
+        co(lo(rr),3);
+        system ("pause");
         break;
 
     case '-':
-            cout<<"\nEnter value 1: ";
+            cout<<"\n\n\tEnter value 1: ";
             cin>>temp;
-            cout<<"\nEnter value 2: ";
+            cout<<"\n\n\tEnter value 2: ";
             cin>>temp1;
             sub=temp-temp1;
-            cout<<"\nSubstraction = "<<sub<<"\n\n";
+            cout<<"\n\n\tSubstraction = "<<sub<<"\n\n";
             system ("pause");
-            return calculator();
             break;
 
     case '*':
-        cout<<"\nHow many item you want to multiplicate: ";
+        cout<<"\n\tHow many item you want to multiplicate : ";
         cin>>item;
 
         for(i=1;i<=item;i++)
         {
-            cout<<"Enter value %d: ";  cin>>temp;  mul*=temp;
+            cout<<"\n\tEnter value "<<i<<" : ";  cin>>temp;
+            mul*=temp;
         }
+        co(lo(rr),14);
+        std::cout<<"\n\t  Result : "<<mul<<endl<<endl;
+        co(lo(rr),3);
         system ("pause");
-        return calculator();
         break;
 
     case '/':
@@ -1101,10 +1163,9 @@ int calculator()////////////calculate///////////////////////
         cout<<"\n\t\t Enter div value : ";
         cin>>temp1;
         div=temp/temp1;
-        cout<<"\nDivision = "<<div<<"\n\n";
+        cout<<"\n\n\tDivision = "<<div<<"\n\n";
         system ("pause");
-        return calculator();
-            break;
+        break;
 
     case 'm':
         cout<<"\nEnter value 1: ";
@@ -1114,19 +1175,17 @@ int calculator()////////////calculate///////////////////////
         mod=mod1%mod2;
         cout<<"\nModulus = "<<mod<<"\n\n";
         system ("pause");
-        return calculator();
-            break;
+        break;
 
     case 'M':
-        cout<<"\nEnter value 1: ";
+        cout<<"\n\n\tEnter value 1: ";
         cin>>mod1;
-        cout<<"\nEnter value 2: ";
+        cout<<"\n\n\tEnter value 2: ";
         cin>>mod2;
         mod=mod1%mod2;
-        cout<<"\nModulus = "<<mod<<"\n\n";
+        cout<<"\n\n\tModulus = "<<mod<<"\n\n";
         system ("pause");
-        return calculator();
-            break;
+        break;
 
     case 's':
         cout<<"\t\t Enter value :";
@@ -1135,7 +1194,6 @@ int calculator()////////////calculate///////////////////////
         cout<<"\t\t ="<<temp;
         cout<<endl<<endl;
         system ("pause");
-        return calculator();
         break;
 
     case 'S':
@@ -1145,33 +1203,23 @@ int calculator()////////////calculate///////////////////////
         cout<<"\t\t ="<<temp;
         cout<<endl<<endl;
         system ("pause");
-        return calculator();
         break;
 
     case '0':
-        return again();
+        return main();
 
     default:
         system("cls");
         system("color 4");
-        cout<<"                           !!!!!!SIMPLE MATHEMATICS CALCULATOR!!!!!!\n\n\n";
-        cout<<"\n\nWrong choice!\nPlease enter a correct sign.\n\n\n";
+        cout<<"                !!!!!!SIMPLE MATHEMATICS CALCULATOR!!!!!!\n\n\n";
+        cout<<"\n\n\tWrong choice!\nPlease enter a correct sign.\n\n\n";
         system ("pause");
-        return calculator();
+        system ("cls");
+
     }
+   }
   }
-    cout<<"\n\n\t\t\t 1. Calculate again";
-    cout<<"\n\n\t\t\t 2. Return main menu";
-    char ch=getch();
-    switch(ch)
-    {
-      case '1':
-            return 1;
-      case '2':
-            return main();
-    }
-  }
-  return again();
+  return calculator();
 }
 
 int tool()///////////////tool///////////////////////////////
@@ -1179,10 +1227,11 @@ int tool()///////////////tool///////////////////////////////
  while (1)
   {
     system("cls");
-    system("color 0a");
-    std::cout << "\n\n\n\t\t 1. Stop watch (lap)"
-              << "\n\t\t 2. Feedback & Suggestion"
-              << "\n\t\t 3. Check for update  v1.1.1"
+    co(lo(rr),14);
+    std::cout << "\n\n\n\t\t 1. Stop watch (lap)\n";
+    co(lo(rr),10);
+    std::cout << "\n\t\t 2. Feedback & Suggestion"
+              << "\n\t\t 3. Check for update  v1.2.1"
               << "\n\t\t 9. Return maim manu"
               << "\n\t   _________________________________";
               char ch=getch();
@@ -1444,7 +1493,7 @@ int developer()//////////////developer//////////////////////
 
 main()//////////***MAIN FUNCTION***/////////////////////////
 {
-    system("color 0a");
+    system("color a");
     loading();
     index();
     char a=getch();
