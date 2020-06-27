@@ -1067,7 +1067,7 @@ void show()/////////////////show////////////////////////////
                         <<"\t\t     _____________________________________________"; }
                   if (dd.subname=="Total")
                   {
-                    co(lo(rr), 6);
+                    co(lo(rr), 14);
                     cout<<"\n\n"<<"\t\t______________________________________________________";
                   }
 
@@ -1227,6 +1227,7 @@ int tool()///////////////tool///////////////////////////////
  while (1)
   {
     system("cls");
+    logo;
     co(lo(rr),14);
     std::cout << "\n\n\n\t\t 1. Stop watch (lap)\n";
     co(lo(rr),10);
@@ -1243,11 +1244,11 @@ int tool()///////////////tool///////////////////////////////
                 break;
 
         case '2':
-                system("start https://github.com/ARROOT");
+                system("start https://mssg.me/sazibarko");
                 break;
 
         case '3':
-                system("start https://github.com/ARROOT");
+                system("start https://github.com/ARROOT/chinese_gpa_with_some_tools");
                 break;
 
         case '9':
@@ -1406,21 +1407,24 @@ int developer()//////////////developer//////////////////////
 {
   lop:
   system("cls");
-  co(lo(rr), 11);
+  co(lo(rr), 14);
   cout<<endl;
   cout<<"\t\t\t"<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<
   a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<"\n";
   cout<<"\t\t\t"<<b<<"                                                  "<<b<<"\n";
   cout<<"\t\t\t"<<b<<"               SAJIB AHAMED ARKO                  "<<b<<"\n";
   cout<<"\t\t\t"<<b<<"   Jiangsu University of Science and Technology   "<<b<<"\n";
-  cout<<"\t\t\t"<<b<<"                                                  "<<b<<"\n";
-  cout<<"\t\t\t"<<b<<"                Follow me                         "<<b<<"\n";
-  cout<<"\t\t\t"<<b<<"                                                  "<<b<<"\n";
+  cout<<"\t\t\t"<<b<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<
+  a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<b<<"\n";
+  cout<<"\t\t\t"<<b<<"                 FOLLOW ME                        "<<b<<"\n";
+  cout<<"\t\t\t"<<b<<"                ===========                       "<<b<<"\n";
   cout<<"\t\t\t"<<b<<"         1. Linkedin : SAJIB AHAMED               "<<b<<"\n";
   cout<<"\t\t\t"<<b<<"         2. Facebook : AHAMED SAJIB               "<<b<<"\n";
   cout<<"\t\t\t"<<b<<"         3. twitter  : Sazib arko                 "<<b<<"\n";
   cout<<"\t\t\t"<<b<<"         4. Github   : ARROOT                     "<<b<<"\n";
   cout<<"\t\t\t"<<b<<"         5. WE_Chat  : sazibarko (Qr)             "<<b<<"\n";
+  cout<<"\t\t\t"<<b<<"        =============================             "<<b<<"\n";
+  cout<<"\t\t\t"<<b<<"         M. massage me (social media)             "<<b<<"\n";
   cout<<"\t\t\t"<<b<<"        =============================             "<<b<<"\n";
   cout<<"\t\t\t"<<b<<"         P. Donate through Paypal                 "<<b<<"\n";
   cout<<"\t\t\t"<<b<<"         W. Donate through WE_Chat (Qr)           "<<b<<"\n";
@@ -1429,7 +1433,7 @@ int developer()//////////////developer//////////////////////
   cout<<"\t\t\t"<<b<<"                                                  "<<b<<"\n";
   cout<<"\t\t\t"<<b<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<
   a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<b<<"\n";
-  cout<<"\n\n\t\t\t     Press 1|2|3|4|5|9|P|W ";
+  cout<<"\n\n\t\t\t      Press 1|2|3|4|5|9|P|W|M ";
   char fc=getch();
 
   switch (fc)
@@ -1479,6 +1483,13 @@ int developer()//////////////developer//////////////////////
         loading();
         system("cls");
         wedqr();
+        goto lop;
+
+     case 'M':
+     case 'm':
+        loading();
+        system("cls");
+        system("start https://mssg.me/sazibarko");
         goto lop;
 
     default:
@@ -1539,7 +1550,7 @@ main()//////////***MAIN FUNCTION***/////////////////////////
                     system("cls");
                     cout<<"\n\n\n\t\t\t Something Going Wrong [wrong input or system fail]\n\n\n";
                     system("pause");
-                    again();
+                    main();
                     break;
 
   }
