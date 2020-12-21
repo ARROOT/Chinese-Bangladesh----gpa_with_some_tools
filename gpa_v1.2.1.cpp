@@ -320,34 +320,39 @@ int en_de_cry()/////////////Two_way_function////////////////
 void ntogCN()//////////ntogChina////////////////////////////
 {
   d;
-  if (d.mark<=100 && d.mark>=96)
+  if(d.mark >= 60 && d.mark <=100)
   {
-    d.point=5.00;d.say="Excellent";
-  }
-  else if (d.mark<=95 && d.mark>=86)
-  {
-    d.point=4.50;d.say="Excellent";
-  }
-  else if (d.mark<=85 && d.mark>=76)
-  {
-    d.point=3.50;d.say="Good";
-  }
-  else if (d.mark<=75 && d.mark>=66)
-  {
-    d.point=2.50;d.say="Medium";
-  }
-  else if (d.mark<=65 && d.mark>=60)
-  {
-    d.point=1.50;d.say="pass";
-  }
-  else if (d.mark<=59 && d.mark>=0)
-  {
-    d.point=0.00;d.say="fail";
+     d.point = ((d.mark-60)/10)+1;
   }
   else
   {
     system("color 4");
     std::cerr << "\t\t Invalid Mark's it should [0-100]" << '\n';
+  }
+
+  if (d.mark<=100 && d.mark>=96)
+  {
+        d.say="Excellent";
+  }
+  else if (d.mark<=95 && d.mark>=86)
+  {
+        d.say="Excellent";
+  }
+  else if (d.mark<=85 && d.mark>=76)
+  {
+        d.say="Good";
+  }
+  else if (d.mark<=75 && d.mark>=66)
+  {
+        d.say="Medium";
+  }
+  else if (d.mark<=65 && d.mark>=60)
+  {
+        d.say="pass";
+  }
+  else if (d.mark<=59 && d.mark>=0)
+  {
+    d.point=0.00;d.say="fail";
   }
 }
 
@@ -671,8 +676,7 @@ int gpain()///////////////////gpain/////////////////////////
 {
           d; cls;
           d.fline=0; co(lo(rr), 11);
-                GPA: 
-                cls;
+                GPA: cls;
                 std::cout<<"\n\t\t\t 1| Chinese GPA system"
                          <<"\n\t\t\t ======================="
                          <<"\n\t\t\t 2| Bangladeshi GPA system";
@@ -980,8 +984,7 @@ void registerin()///////////registerin//////////////////////
             {
               std::cerr <<"\n\t could not open file\n";  again();
             }
-        loginfunction:      
-        cls;
+        loginfunction:      cls;
         co(lo(rr), 11);
         std::cout << "\n\n\t\t\t\t      REGISTRATION PAGE"; co(lo(rr), 14);
         cout<<"\t\t   *(no recovery || Password keep in mind)";  co(lo(rr), 11); ul;
@@ -1801,8 +1804,8 @@ void weqr(int ch)///////////////QR_CODE/////////////////////
 
         QRCO.close();
         system("start QRPLAY.txt");
-
  }
+          //pause;
 }
 
 int calculator_index()////////index of calculator///////////
@@ -1875,7 +1878,6 @@ int developer()//////////////developer//////////////////////
   a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<a<<b<<"\n";
   cout<<"\n\n\t\t\t      Press 1|2|3|4|5|9|P|W|M ";
   char fc=getch();
-
   switch (fc)
     {
       case '1':
@@ -1939,7 +1941,6 @@ int developer()//////////////developer//////////////////////
       pause;
       goto lop;
    }
-
 }
 
 main()//////////***MAIN FUNCTION***/////////////////////////
